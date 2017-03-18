@@ -1,4 +1,4 @@
-package kampusupgrade.kampusupgrade;
+package kampusupgrade.kampusupgrade.Activity;
 
 import android.app.ListActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,8 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import kampusupgrade.kampusupgrade.R;
 
 public class ResaultsActivity extends AppCompatActivity {
 

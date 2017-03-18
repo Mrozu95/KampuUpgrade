@@ -1,4 +1,4 @@
-package kampusupgrade.kampusupgrade;
+package kampusupgrade.kampusupgrade.Activity;
 
 import java.util.List;
 
