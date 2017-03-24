@@ -4,36 +4,28 @@ package kampusupgrade.kampusupgrade.Data;
  * Created by Mathijs on 18-3-2017.
  */
 
-public class Room {
+public class Room{
     String name,wing;
-    int id,number,floor, xCoordinate, yCoordinate;
+    int id,number,floor;
+    Coordinate coordinate;
     Building building;
 
-    public Room(String name, String wing, int id, int number, int floor, int xCoordinate, int yCoordinate, Building building) {
+    public Room(String name, String wing, int id, int number, int floor, Coordinate coordinate, Building building) {
         this.name = name;
         this.wing = wing;
         this.id = id;
         this.number = number;
         this.floor = floor;
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
+        this.coordinate = coordinate;
         this.building = building;
     }
 
-    public int getyCoordinate() {
-        return yCoordinate;
+    public Coordinate getCoordinate() {
+        return coordinate;
     }
 
-    public void setyCoordinate(int yCoordinate) {
-        this.yCoordinate = yCoordinate;
-    }
-
-    public int getxCoordinate() {
-        return xCoordinate;
-    }
-
-    public void setxCoordinate(int xCoordinate) {
-        this.xCoordinate = xCoordinate;
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
     }
 
     public String getName() {
