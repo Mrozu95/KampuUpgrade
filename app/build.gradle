@@ -21,29 +21,24 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile ('com.squareup.retrofit2:converter-simplexml:2.2.0'){
-        exclude module: 'stax-api'
-        exclude module: 'stax'
-        exclude module: 'xpp3'}    compile fileTree(include: ['*.jar'], dir: 'libs')
+
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
     compile 'com.android.support:appcompat-v7:25.1.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:25.1.1'
     testCompile 'junit:junit:4.12'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile files ('libs/jgrapht.jar')
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
-    compile ('com.squareup.retrofit2:converter-simplexml:2.2.0'){
-    compile 'org.springframework:spring-web:3.0.2.RELEASE'
-    compile files('libs/jgrapht.jar')
+    compile('com.squareup.retrofit2:converter-simplexml:2.2.0') {
         exclude module: 'stax-api'
         exclude module: 'stax'
-        exclude module: 'xpp3'}
+        exclude module: 'xpp3'
 
-
-
-
+    }
 
 
 }
