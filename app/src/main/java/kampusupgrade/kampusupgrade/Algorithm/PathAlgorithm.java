@@ -51,9 +51,9 @@ public class PathAlgorithm {
 
 
     //Generate list of nodes to follow
-    public List<Screen> CreatePath()
-    {
+  //  public List<Screen> CreatePath()
+    //{
 
-    }
+    //}
 
 }

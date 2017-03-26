@@ -11,14 +11,9 @@ import retrofit2.http.Path;
 
 public interface KampusUpgradeAPI {
 
-    @GET("/building")
-    Call<Room> getRooms();
 
-    @GET("/rooms/{id}")
-    Call<Room> getRoom(@Path("id") String id);
-
-    @GET("/building")
-    Call<Building> getBuilding();
+    @GET("building")
+    Call<RESTBuildingList> getBuilding();
 
 
 
