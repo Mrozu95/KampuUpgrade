@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -28,5 +29,15 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:25.1.1'
     testCompile 'junit:junit:4.12'
-    compile group: 'org.springframework', name: 'spring-web', version: '3.0.2.RELEASE'
+    compile 'com.squareup.retrofit2:retrofit:2.2.0'
+    compile ('com.squareup.retrofit2:converter-simplexml:2.2.0'){
+        exclude module: 'stax-api'
+        exclude module: 'stax'
+        exclude module: 'xpp3'}
+
+
+
+
+
+
 }
