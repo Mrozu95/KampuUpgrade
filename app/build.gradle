@@ -21,7 +21,7 @@ android {
 }
 
 dependencies {
-    compile 'com.squareup.retrofit2:retrofit:2.2.0'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile ('com.squareup.retrofit2:converter-simplexml:2.2.0'){
         exclude module: 'stax-api'
         exclude module: 'stax'
