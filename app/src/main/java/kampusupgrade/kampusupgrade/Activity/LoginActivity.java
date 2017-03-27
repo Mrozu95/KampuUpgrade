@@ -29,8 +29,8 @@ public class LoginActivity extends AppCompatActivity {
             public void run() {
                 RESTController restController = new RESTController();
                 ArrayList<Building> building = restController.getBuilding();
-                restController.getBuilding();
-               Log.d("REST WORKS", building.get(0).getNumber() + "-" + building.get(1).getNumber());
+                restController.getBuilding("Turku");
+               Log.d("REST WORKS", building.get(0).getStreet() + "-" + building.get(1).getStreet());
 
             }
 

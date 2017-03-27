@@ -15,6 +15,21 @@ public interface KampusUpgradeAPI {
     @GET("building")
     Call<RESTBuildingList> getBuilding();
 
+    @GET("building/id/{id}")
+    Call<RESTBuildingList> getBuilding(@Path("id") int id);
+
+    @GET("building/city/{city}")
+    Call<RESTBuildingList> getBuilding(@Path("city") String city);
+
+    @GET("building/street/{street}")
+    Call<RESTBuildingList> getBuildingByStreet(@Path("street") String city);
+
+    @GET("building/name/{name}")
+    Call<RESTBuildingList> getBuildingByName(@Path("name") String name);
+
+
+
+
 
 
 
