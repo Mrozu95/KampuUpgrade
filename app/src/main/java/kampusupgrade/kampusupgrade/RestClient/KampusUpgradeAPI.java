@@ -27,6 +27,11 @@ public interface KampusUpgradeAPI {
     @GET("building/name/{name}")
     Call<RESTBuildingList> getBuildingByName(@Path("name") String name);
 
+    @GET("room")
+    Call<RESTRoomList> getRoom();
+
+
+
 
 
 

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import kampusupgrade.kampusupgrade.Data.Building;
+import kampusupgrade.kampusupgrade.Data.Room;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -136,7 +137,21 @@ public RESTController(){
         return buildingList.getList();
 
     }
+    public ArrayList<Room> getRoom() {
 
+        KampusUpgradeAPI kampusUpgradeAPI = retrofit.create(KampusUpgradeAPI.class);
+        RESTRoomList roomList = null;
+
+        Call<RESTRoomList> call = kampusUpgradeAPI.getRoom();
+        try {
+            roomList  = call.execute().body();
+        } catch (IOException e) {
+            Log.d("IO",e.toString());
+        }
+
+        return roomList.getList();
+
+    }
 
 
 

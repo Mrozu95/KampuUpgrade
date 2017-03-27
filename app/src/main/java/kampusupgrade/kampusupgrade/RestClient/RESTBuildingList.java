@@ -13,10 +13,10 @@ import kampusupgrade.kampusupgrade.Data.Building;
 /**
  * Created by Mathijs on 22-3-2017.
  */
-@Root (name ="buildings")
+@Root(name = "buildings")
 public class RESTBuildingList {
     @ElementList
-ArrayList<Building> list;
+    ArrayList<Building> list;
 
     public ArrayList<Building> getList() {
         return list;
