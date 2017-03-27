@@ -1,25 +1,38 @@
 package kampusupgrade.kampusupgrade.Data;
 
+import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
 /**
  * Created by Mathijs on 18-3-2017.
  */
-
+@Root (name= "building")
 public class Building {
+    @Element (name = "name")
+    String name;
+    @Element (name= "street")
+    String street;
+    @Element (name= "city")
+    String city;
+    @Element (name= "postal_code")
+    String postalCode;
+    @Attribute (name= "id")
+    int id;
+    @Element (name= "number")
+    int number;
 
-    String name,street,city,postalCode;
-    int id,number;
 
-
-
-    public  Building(int id, String name, String street, String city, int number, String postalCode){
-        name=this.name;
+    public Building(int id, String name, String street, String city, int number, String postalCode) {
+        name = this.name;
         street = this.street;
         city = this.city;
         number = this.number;
-        postalCode =this.postalCode;
-        id= this.id;
+        postalCode = this.postalCode;
+        id = this.id;
 
     }
+    public Building(){};
 
     public int getId() {
         return id;
@@ -28,6 +41,7 @@ public class Building {
     public void setId(int id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }

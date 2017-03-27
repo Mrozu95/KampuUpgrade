@@ -8,7 +8,7 @@ import org.simpleframework.xml.Root;
 import java.util.ArrayList;
 
 import kampusupgrade.kampusupgrade.Data.Building;
-import kampusupgrade.kampusupgrade.Data.Room;
+
 
 /**
  * Created by Mathijs on 22-3-2017.
@@ -16,13 +16,13 @@ import kampusupgrade.kampusupgrade.Data.Room;
 @Root (name ="buildings")
 public class RESTBuildingList {
     @ElementList
-ArrayList<RESTBuilding> list;
+ArrayList<Building> list;
 
-    public ArrayList<RESTBuilding> getList() {
+    public ArrayList<Building> getList() {
         return list;
     }
 
-    public void setList(ArrayList<RESTBuilding> list) {
+    public void setList(ArrayList<Building> list) {
         this.list = list;
     }
 }

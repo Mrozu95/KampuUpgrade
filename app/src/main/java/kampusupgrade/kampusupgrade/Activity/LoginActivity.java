@@ -9,8 +9,8 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import kampusupgrade.kampusupgrade.Data.Building;
 import kampusupgrade.kampusupgrade.R;
-import kampusupgrade.kampusupgrade.RestClient.RESTBuilding;
 import kampusupgrade.kampusupgrade.RestClient.RESTController;
 
 /**
@@ -28,9 +28,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 RESTController restController = new RESTController();
-                ArrayList<RESTBuilding> building = restController.getBuilding();
+                ArrayList<Building> building = restController.getBuilding();
                 restController.getBuilding();
-               Log.d("REST WORKS", building.get(0).getStreet() + "-" + building.get(1).getStreet());
+               Log.d("REST WORKS", building.get(0).getNumber() + "-" + building.get(1).getNumber());
 
             }
 

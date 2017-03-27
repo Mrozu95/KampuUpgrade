@@ -51,7 +51,7 @@ public RESTController(){
 
 
 
-    public ArrayList<RESTBuilding> getBuilding() {
+    public ArrayList<Building> getBuilding() {
 
         KampusUpgradeAPI kampusUpgradeAPI = retrofit.create(KampusUpgradeAPI.class);
         RESTBuildingList buildingList = null;
@@ -63,7 +63,7 @@ public RESTController(){
              buildingList  = call.execute().body();
 
         } catch (IOException e) {
-           Log.d("kanker",e.toString());
+           Log.d("IO",e.toString());
         }
 
         return buildingList.getList();
