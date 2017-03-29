@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import kampusupgrade.kampusupgrade.Data.Building;
 import kampusupgrade.kampusupgrade.Data.Room;
+import kampusupgrade.kampusupgrade.Data.Screen;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -21,31 +22,34 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
  * Created by Mathijs on 21-3-2017.
  */
 
+    /*
+    Call these methods to get data from the Database
+    Be sure to call these methods in a new thread(not in the UI thread )
+    To connect to the RESTServer succesfully change the BASE_IP
+    */
 public class RESTController extends Thread {
     Retrofit retrofit;
-    final  String BASE_URL = "http://192.168.137.1:8080/kampusupgrade/services/";
-public RESTController(){
+    final String BASE_IP = "http://192.168.137.1:8080/";
+    final String FINAL_DESTENATION = "kampusupgrade/services/";
+    final String BASE_URL;
 
-    HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-    logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-    OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-    httpClient.addInterceptor(logging);
+    public RESTController() {
+        BASE_URL = BASE_IP + FINAL_DESTENATION;
 
-    Serializer serializer = new Persister();
-         retrofit = new Retrofit.Builder()
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
+
+        Serializer serializer = new Persister();
+        retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(SimpleXmlConverterFactory.create(serializer))
-                .client(httpClient.build() )
+                .client(httpClient.build())
                 .build();
     }
-
-
-
-
-
-
-
 
     public ArrayList<Building> getBuilding() {
 
@@ -56,10 +60,10 @@ public RESTController(){
         try {
 
 
-             buildingList  = call.execute().body();
+            buildingList = call.execute().body();
 
         } catch (IOException e) {
-           Log.d("IO",e.toString());
+            Log.d("IO", e.toString());
         }
 
         return buildingList.getList();
@@ -75,15 +79,16 @@ public RESTController(){
         try {
 
 
-            buildingList  = call.execute().body();
+            buildingList = call.execute().body();
 
         } catch (IOException e) {
-            Log.d("IO",e.toString());
+            Log.d("IO", e.toString());
         }
 
         return buildingList.getList();
 
     }
+
     public ArrayList<Building> getBuilding(String city) {
 
         KampusUpgradeAPI kampusUpgradeAPI = retrofit.create(KampusUpgradeAPI.class);
@@ -93,15 +98,16 @@ public RESTController(){
         try {
 
 
-            buildingList  = call.execute().body();
+            buildingList = call.execute().body();
 
         } catch (IOException e) {
-            Log.d("IO",e.toString());
+            Log.d("IO", e.toString());
         }
 
         return buildingList.getList();
 
     }
+
     public ArrayList<Building> getBuildingByStreet(String street) {
 
         KampusUpgradeAPI kampusUpgradeAPI = retrofit.create(KampusUpgradeAPI.class);
@@ -111,10 +117,10 @@ public RESTController(){
         try {
 
 
-            buildingList  = call.execute().body();
+            buildingList = call.execute().body();
 
         } catch (IOException e) {
-            Log.d("IO",e.toString());
+            Log.d("IO", e.toString());
         }
 
         return buildingList.getList();
@@ -129,14 +135,15 @@ public RESTController(){
 
         Call<RESTBuildingList> call = kampusUpgradeAPI.getBuildingByName(name);
         try {
-            buildingList  = call.execute().body();
+            buildingList = call.execute().body();
         } catch (IOException e) {
-            Log.d("IO",e.toString());
+            Log.d("IO", e.toString());
         }
 
         return buildingList.getList();
 
     }
+
     public ArrayList<Room> getRoom() {
 
         KampusUpgradeAPI kampusUpgradeAPI = retrofit.create(KampusUpgradeAPI.class);
@@ -144,9 +151,9 @@ public RESTController(){
 
         Call<RESTRoomList> call = kampusUpgradeAPI.getRoom();
         try {
-            roomList  = call.execute().body();
+            roomList = call.execute().body();
         } catch (IOException e) {
-            Log.d("IO",e.toString());
+            Log.d("IO", e.toString());
         }
 
         return roomList.getList();
@@ -160,14 +167,15 @@ public RESTController(){
 
         Call<RESTRoomList> call = kampusUpgradeAPI.getRoomByID(id);
         try {
-            roomList  = call.execute().body();
+            roomList = call.execute().body();
         } catch (IOException e) {
-            Log.d("IO",e.toString());
+            Log.d("IO", e.toString());
         }
 
         return roomList.getList();
 
     }
+
     public ArrayList<Room> getRoomByNo(int no) {
 
         KampusUpgradeAPI kampusUpgradeAPI = retrofit.create(KampusUpgradeAPI.class);
@@ -175,9 +183,9 @@ public RESTController(){
 
         Call<RESTRoomList> call = kampusUpgradeAPI.getRoomByNo(no);
         try {
-            roomList  = call.execute().body();
+            roomList = call.execute().body();
         } catch (IOException e) {
-            Log.d("IO",e.toString());
+            Log.d("IO", e.toString());
         }
 
         return roomList.getList();
@@ -191,16 +199,62 @@ public RESTController(){
 
         Call<RESTRoomList> call = kampusUpgradeAPI.getRoomByBuilding(id);
         try {
-            roomList  = call.execute().body();
+            roomList = call.execute().body();
         } catch (IOException e) {
-            Log.d("IO",e.toString());
+            Log.d("IO", e.toString());
         }
 
         return roomList.getList();
 
     }
 
+    public ArrayList<Screen> getScreen() {
 
+        KampusUpgradeAPI kampusUpgradeAPI = retrofit.create(KampusUpgradeAPI.class);
+        RESTScreenList screenList = null;
+
+        Call<RESTScreenList> call = kampusUpgradeAPI.getScreen();
+        try {
+            screenList = call.execute().body();
+        } catch (IOException e) {
+            Log.d("IO", e.toString());
+        }
+
+        return screenList.getList();
+
+    }
+
+    public ArrayList<Screen> getScreenByID(int id) {
+
+        KampusUpgradeAPI kampusUpgradeAPI = retrofit.create(KampusUpgradeAPI.class);
+        RESTScreenList screenList = null;
+
+        Call<RESTScreenList> call = kampusUpgradeAPI.getScreenByID(id);
+        try {
+            screenList = call.execute().body();
+        } catch (IOException e) {
+            Log.d("IO", e.toString());
+        }
+
+        return screenList.getList();
+
+    }
+
+    public ArrayList<Screen> getScreenByBuilding(int id) {
+
+        KampusUpgradeAPI kampusUpgradeAPI = retrofit.create(KampusUpgradeAPI.class);
+        RESTScreenList screenList = null;
+
+        Call<RESTScreenList> call = kampusUpgradeAPI.getScreenByBuilding(id);
+        try {
+            screenList = call.execute().body();
+        } catch (IOException e) {
+            Log.d("IO", e.toString());
+        }
+
+        return screenList.getList();
+
+    }
 
 
 }

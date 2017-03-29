@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import kampusupgrade.kampusupgrade.Data.Building;
 import kampusupgrade.kampusupgrade.Data.Room;
+import kampusupgrade.kampusupgrade.Data.Screen;
 import kampusupgrade.kampusupgrade.R;
 import kampusupgrade.kampusupgrade.RestClient.RESTController;
 
@@ -29,9 +30,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 RESTController restController = new RESTController();
-                ArrayList<Room> room = restController.getRoom();
-                restController.getRoom();
-               Log.d("REST WORKS:    ","" + room.get(0).getNumber() + room.get(0).getWing() + room.get(0).building.getStreet() + room.get(0).coordinate.getX() + + room.get(0).coordinate.getY() ) ;
+                ArrayList<Screen> screen = restController.getScreenByID(1);
+
+
+
+               Log.d("REST WORKS:    ","" + screen.get(0).getId() + " " +screen.get(0).building.getStreet() + " " + screen.get(0).neighbours.get(0).getId()+  " " + screen.get(0).neighbours.get(0).getDistance()) ;
 
             }
 

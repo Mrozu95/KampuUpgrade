@@ -22,7 +22,7 @@ public interface KampusUpgradeAPI {
     Call<RESTBuildingList> getBuilding(@Path("city") String city);
 
     @GET("building/street/{street}")
-    Call<RESTBuildingList> getBuildingByStreet(@Path("street") String city);
+    Call<RESTBuildingList> getBuildingByStreet(@Path("street") String street);
 
     @GET("building/name/{name}")
     Call<RESTBuildingList> getBuildingByName(@Path("name") String name);
@@ -38,6 +38,17 @@ public interface KampusUpgradeAPI {
 
     @GET("room/building/{id}")
     Call<RESTRoomList> getRoomByBuilding(@Path("id") int id);
+
+    @GET("screen")
+    Call<RESTScreenList> getScreen();
+
+    @GET("screen/id/{id}")
+    Call<RESTScreenList> getScreenByID(@Path("id") int id);
+
+    @GET("screen/building/{id}")
+    Call<RESTScreenList> getScreenByBuilding(@Path("id") int id);
+
+
 
 
 

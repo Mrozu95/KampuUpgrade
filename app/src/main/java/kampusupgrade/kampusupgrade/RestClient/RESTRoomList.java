@@ -10,9 +10,9 @@ import kampusupgrade.kampusupgrade.Data.Room;
 /**
  * Created by Mathijs on 27-3-2017.
  */
-
+@Root(name = "rooms")
 public class RESTRoomList {
-    @Root(name = "rooms")
+
 
         @ElementList
         ArrayList<Room> list;
