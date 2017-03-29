@@ -32,7 +32,7 @@ public class Building {
         id = this.id;
 
     }
-    public Building(){};
+    public Building(){}
 
     public int getId() {
         return id;

@@ -1,14 +1,28 @@
 package kampusupgrade.kampusupgrade.Data;
 
+import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
 /**
  * Created by Mathijs on 18-3-2017.
  */
-
+@Root
 public class Room{
-    String name,wing;
-    int id,number,floor;
-    Coordinate coordinate;
-    Building building;
+    @Element (name = "name")
+    String name ;
+    @Element (name = "wing")
+    String wing;
+    @Attribute (name = "id")
+    int id;
+    @Element (name = "roomnumber")
+    int number;
+    @Element (name = "floor")
+    int floor;
+    @Element (name = "coordinates")
+   public Coordinate coordinate;
+    @Element (name = "building")
+   public Building building;
 
     public Room(String name, String wing, int id, int number, int floor, Coordinate coordinate, Building building) {
         this.name = name;
@@ -18,6 +32,9 @@ public class Room{
         this.floor = floor;
         this.coordinate = coordinate;
         this.building = building;
+    }
+    public  Room(){
+
     }
 
     public Coordinate getCoordinate() {
