@@ -55,25 +55,6 @@ public interface KampusUpgradeAPI {
 
 
 
-    @GET("room")
-    Call<RESTRoomList> getRoom();
-
-    @GET("room/id/{id}")
-    Call<RESTRoomList> getRoomByID(@Path("id") int id);
-
-    @GET("room/no/{no}")
-    Call<RESTRoomList> getRoomByNo(@Path("no") int no);
-
-    @GET("room/building/{id}")
-    Call<RESTRoomList> getRoomByBuilding(@Path("id") int id);
-
-
-
-
-
-
-
-
 
 
 

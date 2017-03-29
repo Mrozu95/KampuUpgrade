@@ -190,53 +190,7 @@ public class RESTController extends Thread {
 
     }
 
-    public ArrayList<Room> getRoom() {
 
-        KampusUpgradeAPI kampusUpgradeAPI = retrofit.create(KampusUpgradeAPI.class);
-        RESTRoomList roomList = null;
-
-        Call<RESTRoomList> call = kampusUpgradeAPI.getRoom();
-        try {
-            roomList = call.execute().body();
-        } catch (IOException e) {
-            Log.d("IO", e.toString());
-        }
-
-        return roomList.getList();
-
-    }
-
-    public ArrayList<Room> getRoomByID(int id) {
-
-        KampusUpgradeAPI kampusUpgradeAPI = retrofit.create(KampusUpgradeAPI.class);
-        RESTRoomList roomList = null;
-
-        Call<RESTRoomList> call = kampusUpgradeAPI.getRoomByID(id);
-        try {
-            roomList = call.execute().body();
-        } catch (IOException e) {
-            Log.d("IO", e.toString());
-        }
-
-        return roomList.getList();
-
-    }
-
-    public ArrayList<Room> getRoomByNo(int no) {
-
-        KampusUpgradeAPI kampusUpgradeAPI = retrofit.create(KampusUpgradeAPI.class);
-        RESTRoomList roomList = null;
-
-        Call<RESTRoomList> call = kampusUpgradeAPI.getRoomByNo(no);
-        try {
-            roomList = call.execute().body();
-        } catch (IOException e) {
-            Log.d("IO", e.toString());
-        }
-
-        return roomList.getList();
-
-    }
 
     public ArrayList<Room> getRoomByBuilding(int id) {
 
