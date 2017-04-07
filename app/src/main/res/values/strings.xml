@@ -15,6 +15,6 @@
     <string name="results_in_resultsActivity">Results:</string>
 
     <!-- Search activity-->
-    <string name="search_text">University</string>
+    <string name="search_text">Street/Building</string>
     <string name="search_btn">Search</string>
 </resources>

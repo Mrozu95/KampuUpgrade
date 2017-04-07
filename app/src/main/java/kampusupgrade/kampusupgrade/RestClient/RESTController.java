@@ -30,12 +30,15 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 public class RESTController extends Thread {
     Retrofit retrofit;
     final String BASE_IP = "http://192.168.137.1:8080/";
-    final String FINAL_DESTENATION = "kampusupgrade/services/";
-    final String BASE_URL;
+    final String BASE_IP_Michal = "http://192.168.2.65:8080/";
+    final String FINAL_DESTENATION_MICHAL = "KampusUpgradeRESTServer/services/";
+    final String FINAL_DESTENATION = "KampusUpgradeRESTServer/services/";
+    final String BASE_URL_MICHAL, BASE_URL_MATHIJS;
 
 
     public RESTController() {
-        BASE_URL = BASE_IP + FINAL_DESTENATION;
+        BASE_URL_MATHIJS = BASE_IP + FINAL_DESTENATION;
+        BASE_URL_MICHAL = BASE_IP_Michal + FINAL_DESTENATION_MICHAL;
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -45,7 +48,7 @@ public class RESTController extends Thread {
 
         Serializer serializer = new Persister();
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BASE_URL_MICHAL)
                 .addConverterFactory(SimpleXmlConverterFactory.create(serializer))
                 .client(httpClient.build())
                 .build();

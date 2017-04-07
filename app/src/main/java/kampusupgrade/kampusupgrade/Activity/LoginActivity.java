@@ -29,12 +29,12 @@ public class LoginActivity extends AppCompatActivity {
         Thread thread = new Thread() {
             @Override
             public void run() {
-                RESTController restController = new RESTController();
-                ArrayList<Screen> screen = restController.getScreenByID(1);
+                //RESTController restController = new RESTController();
+                //ArrayList<Screen> screen = restController.getScreenByID(1);
 
 
 
-               Log.d("REST WORKS:    ","" + screen.get(0).getId() + " " +screen.get(0).building.getStreet() + " " + screen.get(0).neighbours.get(0).getId()+  " " + screen.get(0).neighbours.get(0).getDistance()) ;
+               //Log.d("REST WORKS:    ","" + screen.get(0).getId() + " " +screen.get(0).building.getStreet() + " " + screen.get(0).neighbours.get(0).getId()+  " " + screen.get(0).neighbours.get(0).getDistance()) ;
 
             }
 

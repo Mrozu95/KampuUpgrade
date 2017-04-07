@@ -1,25 +1,188 @@
 package kampusupgrade.kampusupgrade.Activity;
 
 import android.app.Activity;
+import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Handler;
+
+import kampusupgrade.kampusupgrade.Algorithm.PathAlgorithm;
+import kampusupgrade.kampusupgrade.Data.Room;
+import kampusupgrade.kampusupgrade.Data.Screen;
 import kampusupgrade.kampusupgrade.R;
+import kampusupgrade.kampusupgrade.RestClient.RESTController;
 
 public class NavigationActivity extends AppCompatActivity {
 
+    private ListView listViewScreens;
+    private ArrayAdapter<Integer> adapter;
+
     private BluetoothAdapter bluetoothAdapter;
+    private RESTController base;
+    private PathAlgorithm pathAlgorithm;
+    //List of all screens in the building
+    ArrayList<Screen> screenList;
+    private Screen startScreen;
+    private Screen endScreen;
+    private int roomID;
+    private int buildingID;
+    private Room destinationRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
-        runBluetooth();
+        Intent intent = getIntent();
+        if (intent != null) {
+            roomID = intent.getIntExtra("ROOM_ID", 0);
+            buildingID = intent.getIntExtra("BUILDING_ID", 0);
+        }
+
+        listViewScreens = (ListView) findViewById(R.id.screenList);
+
+        //------------------------------------------------------------
+        //------------------------------------------------------------
+        //------------------------------------------------------------
+        //------------------------------------------------------------
+        //------------------------------------------------------------
+        new AsyncTask<Void, Void, ArrayList<Screen>>()
+        {
+            @Override
+            protected ArrayList<Screen> doInBackground(Void... params) {
+                base = new RESTController();
+                return base.getScreen();
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<Screen> screens) {
+                ArrayList<Integer> screenList = new ArrayList<>(0);
+
+                for(Screen s: screens)
+                {
+                    screenList.add(s.getId());
+                }
+
+                adapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1, screenList);
+                listViewScreens.setAdapter(adapter);
+            }
+        }.execute();
+        //------------------------------------------------------------
+        //------------------------------------------------------------
+        //------------------------------------------------------------
+        //------------------------------------------------------------
+        //------------------------------------------------------------
+        //------------------------------------------------------------
+        //------------------------------------------------------------
+
+
+        //TODO should work after repaired querry which returns screens
+        //run();
     }
+
+
+    private void run()
+    {
+        //for test starting screen is first screen on the left side of the map
+        //collecting data
+        new AsyncTask<Integer, Void, ArrayList<Screen>>()
+        {
+            @Override
+            protected ArrayList<Screen> doInBackground(Integer... params) {
+                base = new RESTController();
+                destinationRoom = base.getRoomByID(params[1]).get(0);
+                screenList = base.getScreenByBuilding(params[0]);
+                return screenList;
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<Screen> listOfScreens)
+            {
+                FindNearestScreen();
+                for(Screen s: listOfScreens)
+                {
+                    if(s.getId() == 0)
+                        startScreen = s;
+                }
+                runNavigation();
+                ArrayList<Integer> screens = new ArrayList<>();
+                for (Screen s: pathAlgorithm.getPath())
+                {
+                    screens.add(s.getId());
+                }
+                adapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1, screens);
+                listViewScreens.setAdapter(adapter);
+            }
+        }.execute(buildingID, roomID);
+
+
+
+        //runBluetooth();
+/*        final Thread thread = new Thread() {
+            @Override
+            public void run() {
+                RESTController base = new RESTController();
+                lista = base.getScreen();
+                final String temp = Integer.toString(lista.get(0).getId());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        testbox = (TextView)findViewById(R.id.testText);
+                        testbox.setText("" + Integer.toString(lista.get(0).getId()));
+                    }
+                });
+
+
+            }};
+        thread.start();*/
+    }
+
+
+
+    //finds screen to which make a path
+    private void FindNearestScreen()
+    {
+        endScreen = screenList.get(0);
+        float diff = 10000000;
+        for(Screen screen: screenList)
+        {
+            float newDiff = CalculateDistanceBetweenScreenAndRoom(destinationRoom, screen);
+            if(newDiff < diff)
+            {
+                endScreen = screen;
+                diff = newDiff;
+            }
+        }
+    }
+
+    private float CalculateDistanceBetweenScreenAndRoom(Room room, Screen screen)
+    {
+        float xDiff = room.getCoordinate().getX() - screen.getCoordinate().getX();
+        float yDiff = room.getCoordinate().getY() - screen.getCoordinate().getY();
+
+        double sum = (Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
+        double dist = Math.sqrt(sum);
+
+        return (float)dist;
+    }
+
+    private void runNavigation()
+    {
+        pathAlgorithm = new PathAlgorithm(startScreen, endScreen, screenList);
+    }
+
 
     private void runBluetooth() {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
