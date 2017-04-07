@@ -139,14 +139,14 @@ public class ResaultsActivity extends AppCompatActivity {
                         {
                             base = new RESTController();
                             buildingID = base.getBuildingByName(params[0]).get(0).getId();
-                            roomList = base.getRoomByBuilding(buildingID);
                             results.clear();
-                            return roomList;
+                            return base.getRoomByBuilding(buildingID);
                         }
 
                         @Override
                         protected void onPostExecute(ArrayList<Room> list)
                         {
+                            roomList = list;
                             for (Room room: list)
                             {
                                 if(room.getName().compareTo("null") == 0)

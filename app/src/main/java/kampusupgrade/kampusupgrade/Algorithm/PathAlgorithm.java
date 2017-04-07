@@ -22,7 +22,7 @@ import kampusupgrade.kampusupgrade.RestClient.RESTController;
 public class PathAlgorithm {
 
     //graph of building. Screens are vertexes. Edge is from Screen to Screen and has it own weight calculated on distance between screens
-    private SimpleDirectedWeightedGraph<Screen,DefaultWeightedEdge> graph;
+    private SimpleDirectedWeightedGraph<Integer, DefaultWeightedEdge> graph;
     //private DijkstraShortestPath<Screen, Screen> dijkstraShortestPath;
 
     //list of screen which will be path of user
@@ -31,7 +31,9 @@ public class PathAlgorithm {
     private final Screen startPoint;
     private final Screen endPoint;
     private ArrayList<Screen> screens;
-    private List<Screen> path;
+
+    //List of all screens' ID
+    private List<DefaultWeightedEdge> path;
 
     public PathAlgorithm(Screen startPoint, Screen endPoint, ArrayList<Screen> screens)
     {
@@ -46,7 +48,7 @@ public class PathAlgorithm {
     private void run()
     {
         MakeGraph();
-        DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(graph, startPoint ,endPoint);
+        DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(graph, startPoint.getId() ,endPoint.getId());
         path = dijkstraShortestPath.getPathEdgeList();
     }
 
@@ -55,12 +57,17 @@ public class PathAlgorithm {
     private void MakeGraph()
     {
 
+        //adding vertexes
+        for(Screen s: screens)
+        {
+            graph.addVertex(s.getId());
+        }
+
         for (Screen screen: screens)
         {
             for (Screen neighbour: screen.getNeighbours())
             {
-                graph.addEdge(screen, neighbour);
-                DefaultWeightedEdge edge = graph.addEdge(screen, neighbour);
+                DefaultWeightedEdge edge = graph.addEdge(screen.getId(), neighbour.getId());
                 graph.setEdgeWeight(edge, CalculateDistanceBetweenScreens(screen, neighbour));
             }
         }
@@ -78,11 +85,30 @@ public class PathAlgorithm {
         return (float)dist;
     }
 
-    public SimpleDirectedWeightedGraph<Screen, DefaultWeightedEdge> getGraph() {
-        return graph;
-    }
+    public ArrayList<Integer> getPath()
+    {
+        ArrayList<Integer> intPath = new ArrayList<>();
+        if(path.size() > 2)
+        {
+            for(int i = 0; i < path.size(); i++)
+            {
+                if(i < path.size() - 1)
+                {
+                    intPath.add(graph.getEdgeSource(path.get(i)));
+                }
+                else //last screen id
+                {
+                    intPath.add(graph.getEdgeSource(path.get(i)));
+                    intPath.add(graph.getEdgeTarget(path.get(i)));
+                }
+            }
+        }
+        else //one edge
+        {
+            intPath.add(graph.getEdgeSource(path.get(0)));
+            intPath.add(graph.getEdgeTarget(path.get(0)));
+        }
 
-    public List<Screen> getPath() {
-        return path;
+        return intPath;
     }
 }

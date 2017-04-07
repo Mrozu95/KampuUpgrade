@@ -13,6 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.jgrapht.graph.DefaultWeightedEdge;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,43 +55,7 @@ public class NavigationActivity extends AppCompatActivity {
 
         listViewScreens = (ListView) findViewById(R.id.screenList);
 
-        //------------------------------------------------------------
-        //------------------------------------------------------------
-        //------------------------------------------------------------
-        //------------------------------------------------------------
-        //------------------------------------------------------------
-        new AsyncTask<Void, Void, ArrayList<Screen>>()
-        {
-            @Override
-            protected ArrayList<Screen> doInBackground(Void... params) {
-                base = new RESTController();
-                return base.getScreen();
-            }
-
-            @Override
-            protected void onPostExecute(ArrayList<Screen> screens) {
-                ArrayList<Integer> screenList = new ArrayList<>(0);
-
-                for(Screen s: screens)
-                {
-                    screenList.add(s.getId());
-                }
-
-                adapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1, screenList);
-                listViewScreens.setAdapter(adapter);
-            }
-        }.execute();
-        //------------------------------------------------------------
-        //------------------------------------------------------------
-        //------------------------------------------------------------
-        //------------------------------------------------------------
-        //------------------------------------------------------------
-        //------------------------------------------------------------
-        //------------------------------------------------------------
-
-
-        //TODO should work after repaired querry which returns screens
-        //run();
+        run();
     }
 
 
@@ -102,26 +68,18 @@ public class NavigationActivity extends AppCompatActivity {
             @Override
             protected ArrayList<Screen> doInBackground(Integer... params) {
                 base = new RESTController();
+                startScreen = base.getScreenByID(1).get(0);
                 destinationRoom = base.getRoomByID(params[1]).get(0);
-                screenList = base.getScreenByBuilding(params[0]);
-                return screenList;
+                return base.getScreenByBuilding(params[0]);
             }
 
             @Override
             protected void onPostExecute(ArrayList<Screen> listOfScreens)
             {
+                screenList = listOfScreens;
                 FindNearestScreen();
-                for(Screen s: listOfScreens)
-                {
-                    if(s.getId() == 0)
-                        startScreen = s;
-                }
                 runNavigation();
-                ArrayList<Integer> screens = new ArrayList<>();
-                for (Screen s: pathAlgorithm.getPath())
-                {
-                    screens.add(s.getId());
-                }
+                ArrayList<Integer> screens = pathAlgorithm.getPath();
                 adapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1, screens);
                 listViewScreens.setAdapter(adapter);
             }
@@ -172,7 +130,11 @@ public class NavigationActivity extends AppCompatActivity {
         float xDiff = room.getCoordinate().getX() - screen.getCoordinate().getX();
         float yDiff = room.getCoordinate().getY() - screen.getCoordinate().getY();
 
-        double sum = (Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
+        float xPow, yPow;
+        xPow = xDiff * xDiff;
+        yPow = yDiff * yDiff;
+
+        double sum = (xPow + yPow);
         double dist = Math.sqrt(sum);
 
         return (float)dist;
