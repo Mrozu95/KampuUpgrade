@@ -23,6 +23,8 @@ public class Room{
    public Coordinate coordinate;
     @Element (name = "building")
    public Building building;
+    @Element (name = "screen")
+    Screen screen;
 
     public Room(String name, String wing, int id, int number, int floor, Coordinate coordinate, Building building) {
         this.name = name;

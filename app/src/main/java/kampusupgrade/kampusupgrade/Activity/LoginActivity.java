@@ -29,8 +29,9 @@ public class LoginActivity extends AppCompatActivity {
         Thread thread = new Thread() {
             @Override
             public void run() {
-                //RESTController restController = new RESTController();
-                //ArrayList<Screen> screen = restController.getScreenByID(1);
+                RESTController restController = new RESTController();
+                ArrayList<Room> room = restController.getRoom();
+                room.get(1);
 
 
 
