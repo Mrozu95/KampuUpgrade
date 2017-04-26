@@ -24,9 +24,9 @@ public class Room{
     @Element (name = "building")
    public Building building;
     @Element (name = "screen")
-    Screen screen;
+    Screen closestScreen;
 
-    public Room(String name, String wing, int id, int number, int floor, Coordinate coordinate, Building building) {
+    public Room(String name, String wing, int id, int number, int floor, Coordinate coordinate, Building building, Screen screen ) {
         this.name = name;
         this.wing = wing;
         this.id = id;
@@ -34,6 +34,7 @@ public class Room{
         this.floor = floor;
         this.coordinate = coordinate;
         this.building = building;
+        this.closestScreen = screen;
     }
     public  Room(){
 
@@ -93,5 +94,13 @@ public class Room{
 
     public void setBuilding(Building building) {
         this.building = building;
+    }
+
+    public Screen getClosestScreen() {
+        return closestScreen;
+    }
+
+    public void setClosestScreen(Screen closestScreen) {
+        this.closestScreen = closestScreen;
     }
 }

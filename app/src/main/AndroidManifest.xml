@@ -26,8 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.SearchActivity" />
-        <activity android:name=".Activity.ResaultsActivity" />
+        <activity android:name=".Activity.SearchActivity"
+            android:label="Search for university"/>
+        <activity android:name=".Activity.ResaultsActivity"
+            android:label="Universities"/>
         <activity android:name=".Activity.NavigationActivity"></activity>
     </application>
 

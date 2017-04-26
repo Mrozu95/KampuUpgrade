@@ -112,17 +112,7 @@ public class NavigationActivity extends AppCompatActivity {
     //finds screen to which make a path
     private void FindNearestScreen()
     {
-        endScreen = screenList.get(0);
-        float diff = 10000000;
-        for(Screen screen: screenList)
-        {
-            float newDiff = CalculateDistanceBetweenScreenAndRoom(destinationRoom, screen);
-            if(newDiff < diff)
-            {
-                endScreen = screen;
-                diff = newDiff;
-            }
-        }
+        endScreen = destinationRoom.getClosestScreen();
     }
 
     private float CalculateDistanceBetweenScreenAndRoom(Room room, Screen screen)

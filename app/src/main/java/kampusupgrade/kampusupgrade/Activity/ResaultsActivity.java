@@ -99,7 +99,7 @@ public class ResaultsActivity extends AppCompatActivity {
                 //TODO extend searching by streets names
                 for (Building building: buildings)
                 {
-                    if(building.getName().toLowerCase().contains(searchPhrase))
+                    if(building.getName().toLowerCase().contains(searchPhrase.toLowerCase()))
                     {
                         results.add(building.getName());
                     }
@@ -129,6 +129,7 @@ public class ResaultsActivity extends AppCompatActivity {
 
                 if(listStage == 0)
                 {
+                    setTitle("Rooms");
                     //get clicked Item
                     String buildingName = (String)((TextView)view).getText();
 
